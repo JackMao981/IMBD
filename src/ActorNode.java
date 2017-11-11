@@ -1,21 +1,13 @@
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class ActorNode implements Node{
+public class ActorNode extends GraphNode{
 
     String fName;
     ArrayList<MovieNode> fNeighbors;
 
     public ActorNode(String name, ArrayList<MovieNode> neighbors) {
-        fName = name;
+        super(name);
         fNeighbors = neighbors;
-    }
-
-    public String getName() {
-        return fName;
-    }
-
-    public ArrayList<MovieNode> getNeighbors() {
-        return fNeighbors;
     }
 }
