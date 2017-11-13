@@ -33,7 +33,7 @@ public class IMDBGraph implements Graph{
      * Adds a node to the collection.
      * @param aNode the node to add.
      */
-    //if it fucks up it's because it should be GraphNode
+    //if it messes up it's because it should be GraphNode
     //-JSS from the past
     public void addNode(Node aNode) {
         fMap.put(aNode.getName(), aNode);
