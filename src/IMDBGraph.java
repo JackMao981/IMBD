@@ -25,7 +25,7 @@ public class IMDBGraph implements Graph{
      * Retrives all of the nodes in a collection.
      * @return the nodes stored in a collection.//
      */
-    public GraphNode getNodes() {
+    public Collection<GraphNode> getNodes() {
         return fMap.values()
     }
 
