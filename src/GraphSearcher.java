@@ -5,11 +5,21 @@ public class GraphSearcher implements GraphSearchEngine {
     private List<Node> mVisited;
     private Queue<List<Node>> mToVisit;
 
+    /**
+     * Creates a GraphSearcher which implements GraphSearchEngine, and is capable of
+     * finding and returning the shortest path between two nodes.
+     */
     public GraphSearcher() {
         mVisited = new ArrayList<Node>();
         mToVisit = new LinkedList<List<Node>>();
     }
 
+    /**
+     * Finds and returns the shortest path between two nodes
+     * @param s the start node.
+     * @param t the target node.
+     * @return the path from s to t, including s and t
+     */
     public List<Node> findShortestPath(Node s, Node t) {
         final ArrayList<Node> initialPath = new ArrayList<Node>();
         initialPath.add(s);
