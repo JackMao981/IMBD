@@ -4,7 +4,7 @@ import java.util.Collection;
 public class MovieNode extends GraphNode{
 
     String fName;
-    ArrayList<ActorNode> fNeighbors;
+    Collection<ActorNode> fNeighbors;
 
     public MovieNode(String name, ArrayList<ActorNode> neighbors) {
         super(name);
