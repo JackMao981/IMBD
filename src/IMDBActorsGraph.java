@@ -19,9 +19,11 @@ public class IMDBActorsGraph implements Graph {
 	public IMDBActorsGraph(String actorsFilename, String actressesFilename) throws IOException {
 		this.actorsFilename = actorsFilename;
 		this.actressesFilename = actressesFilename;
+		actorNodes = new ArrayList<ActorNode>();
 		initActors();
 		readActors();
-		
+		parseActors();
+
 	}
 
 	/**
@@ -45,37 +47,67 @@ public class IMDBActorsGraph implements Graph {
 		// brings the scanner to the line that says "THE ACTORS LIST"
 		while (actorScanner.hasNext()) {
 			if (!actorScanner.nextLine().contains("THE ACTORS LIST")) {
-				System.out.println(actorScanner.nextLine());
+				actorScanner.nextLine();
 			} else {
 				break;
 			}
 		}
-		
-		for(int i = 0; i<5; i++){
-			System.out.println(actorScanner.nextLine());
+
+		for (int i = 0; i < 5; i++) {
+			actorScanner.nextLine();
 		}
-		
+
 	}
 
-	private void parseActors(){
+	private void parseActors() {
 		StringTokenizer actorTokenizer;
 		String actorString;
 		ArrayList<MovieNode> movieNodes;
-		while(actorScanner.hasNext()){
+		String movieString;
+		String movieName;
+		String actorName;
+		while (actorScanner.hasNext()) {
 			actorString = actorScanner.nextLine();
-			
+
 			int counter = 0;
-			if(!actorString.startsWith("/t")){
-				actorTokenizer = new StringTokenizer(actorString, "/t");
-				actorNodes.add(new ActorNode(actorTokenizer.nextToken(); null));
-				counter++;
-				while(actorString.startsWith("/t")){
-					
+			if (!actorString.startsWith("\t")) {
+				actorTokenizer = new StringTokenizer(actorString, "\t");
+				actorName = actorTokenizer.nextToken();				
+
+				actorNodes.add(new ActorNode(actorName, new ArrayList<MovieNode>()));
+
+				movieName = actorTokenizer.nextToken();
+
+				// checks if the movie is a TV or TV movie
+				if (!movieName.contains("\"") && !actorString.contains("(TV)")) {
+					actorNodes.get(counter).addNeighbor(new MovieNode(movieName, new ArrayList<ActorNode>()));
 				}
 				
-			} 
+//				actorString = actorScanner.nextLine();
+//				actorTokenizer = new StringTokenizer(actorString, "\t");
+//				movieString = actorTokenizer.nextToken();
+				
+				while (actorString.startsWith("\t")) {
+					movieString = actorScanner.nextLine();
+					if (!movieString.contains("\"") && !actorString.contains("(TV)")) {
+						actorNodes.get(counter).addNeighbor(new MovieNode(movieString, new ArrayList<ActorNode>()));
+					}
+				}
+				if (actorNodes.get(counter).fNeighbors.size() > 0) {
+					System.out.print(actorNodes.get(counter).getName());
+					for(int i = 0; i< actorNodes.get(counter).fNeighbors.size();i++){
+						System.out.print("\t" + actorNodes.get(counter).fNeighbors.get(i).getName());
+					}
+				System.out.println();
+					counter++;
+				} else {
+					actorNodes.remove(counter);
+				}
+			}
+			actorScanner.nextLine();
 		}
 	}
+
 	@Override
 	public Collection<? extends Node> getNodes() {
 		// TODO Auto-generated method stub

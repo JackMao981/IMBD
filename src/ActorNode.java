@@ -10,4 +10,8 @@ public class ActorNode extends GraphNode{
         super(name);
         fNeighbors = neighbors;
     }
+    public void addNeighbor(MovieNode movie) {
+        fNeighbors.add(movie);
+    }
+
 }
