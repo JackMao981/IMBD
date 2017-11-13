@@ -3,11 +3,8 @@ import java.util.Collection;
 
 public class ActorNode extends GraphNode{
 
-    String fName;
-    Collection<MovieNode> fNeighbors;
-
-    public ActorNode(String name, Collection<MovieNode> neighbors) {
-        super(name);
+    public ActorNode(String name, ArrayList<MovieNode> neighbors) {
+        super(name, neighbors);
         fNeighbors = neighbors;
     }
     public void addNeighbor(MovieNode movie) {
