@@ -66,18 +66,18 @@ public class IMDBActorsGraph implements Graph {
 		String movieString;
 		String movieName;
 		String actorName;
+		int counter = 0;
 		while (actorScanner.hasNext()) {
 			actorString = actorScanner.nextLine();
-			
-			//DELETE NEXT LINE
-			System.out.println(actorString);
-			int counter = 0;
-			
+
+			// DELETE NEXT LINE
+			System.out.println(actorString + "\t" + counter);
+
 			if (!actorString.startsWith("\t")) {
 				actorTokenizer = new StringTokenizer(actorString, "\t");
 				actorName = actorTokenizer.nextToken();
 				System.out.println(actorName);
-				
+
 				actorNodes.add(new ActorNode(actorName, new ArrayList<MovieNode>()));
 
 				movieName = actorTokenizer.nextToken();
@@ -95,15 +95,15 @@ public class IMDBActorsGraph implements Graph {
 					}
 				}
 				if (actorNodes.get(counter).fNeighbors.size() > 0) {
-					//EVENTUALLY DELETE
+					// EVENTUALLY DELETE
 					System.out.print(actorNodes.get(counter).fName);
 					for (int i = 0; i < actorNodes.get(counter).fNeighbors.size(); i++) {
 						System.out.print(
 								"\t" + ((ArrayList<MovieNode>) actorNodes.get(counter).fNeighbors).get(i).getName());
 					}
 					System.out.println();
-					
-					//DON'T DELETE
+
+					// DON'T DELETE
 					counter++;
 				} else {
 					actorNodes.remove(counter);
