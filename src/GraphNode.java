@@ -19,4 +19,5 @@ public class GraphNode implements Node {
 	public Collection<? extends Node> getNeighbors() {
 		return fNeighbors;
 	}
+
 }
