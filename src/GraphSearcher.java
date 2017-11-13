@@ -23,7 +23,7 @@ public class GraphSearcher implements GraphSearchEngine {
             for (Iterator<? extends Node> i = edges.iterator(); i.hasNext(); ) {
                 Node neighbor = i.next();
                 if (!(mVisited.contains(neighbor))) {
-                    final List<Node> copiedPath = new ArrayList<Node>(currentPath.size());
+                    final List<Node> copiedPath = new ArrayList<Node>((currentPath.size() + 1 ));
                     Collections.copy(copiedPath, currentPath);
                     copiedPath.add(neighbor);
 
