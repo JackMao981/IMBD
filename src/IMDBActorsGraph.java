@@ -78,28 +78,28 @@ public class IMDBActorsGraph implements Graph {
 				actorName = actorTokenizer.nextToken();
 				System.out.println(actorName);
 
-				actorNodes.add(new ActorNode(actorName, new ArrayList<MovieNode>()));
+				actorNodes.add(new ActorNode(actorName));
 
 				movieName = actorTokenizer.nextToken();
 
 				// checks if the movie is a TV or TV movie
 				if (!movieName.contains("\"") && !actorString.contains("(TV)")) {
-					actorNodes.get(counter).addNeighbor(new MovieNode(movieName, new ArrayList<ActorNode>()));
+					actorNodes.get(counter).addNeighbor(new MovieNode(movieName));
 				}
 
 				// checks indented movies
 				while (actorString.startsWith("\t")) {
 					movieString = actorScanner.nextLine();
 					if (!movieString.contains("\"") && !actorString.contains("(TV)")) {
-						actorNodes.get(counter).addNeighbor(new MovieNode(movieString, new ArrayList<ActorNode>()));
+						actorNodes.get(counter).addNeighbor(new MovieNode(movieString));
 					}
 				}
-				if (actorNodes.get(counter).fNeighbors.size() > 0) {
+				if (actorNodes.get(counter).getNeighbors().size() > 0) {
 					// EVENTUALLY DELETE
-					System.out.print(actorNodes.get(counter).fName);
-					for (int i = 0; i < actorNodes.get(counter).fNeighbors.size(); i++) {
+					System.out.print(actorNodes.get(counter).getName());
+					for (int i = 0; i < actorNodes.get(counter).getNeighbors().size(); i++) {
 						System.out.print(
-								"\t" + ((ArrayList<MovieNode>) actorNodes.get(counter).fNeighbors).get(i).getName());
+								"\t" + ((ArrayList<MovieNode>) actorNodes.get(counter).getNeighbors()).get(i).getName());
 					}
 					System.out.println();
 

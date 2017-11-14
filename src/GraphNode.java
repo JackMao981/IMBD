@@ -3,21 +3,23 @@ import java.util.Collection;
 
 public class GraphNode implements Node {
 
-	String fName;
-	Collection<? extends Node> fNeighbors;
+	protected String mName;
+	protected Collection<GraphNode> mNeighbors;
 
-	public GraphNode(String name, Collection<? extends Node> neighbor) {
-		fName = name;
-		fNeighbors = neighbor;
-		// !!! issue with inability to instantiate fNeighbors
+	protected GraphNode(String name) {
+		mName = name;
+		mNeighbors = new ArrayList<GraphNode>();
 	}
 
 	public String getName() {
-		return fName;
+		return mName;
 	}
 
 	public Collection<? extends Node> getNeighbors() {
-		return fNeighbors;
+		return mNeighbors;
 	}
 
+    protected void addNeighbor(GraphNode movie) {
+        mNeighbors.add(movie);
+    }
 }
