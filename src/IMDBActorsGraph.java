@@ -109,7 +109,9 @@ public class IMDBActorsGraph implements Graph {
 					actorNodes.remove(counter);
 				}
 			}
-			actorScanner.nextLine();
+			if (actorScanner.hasNextLine()) {
+				actorScanner.nextLine();
+			}
 		}
 	}
 
