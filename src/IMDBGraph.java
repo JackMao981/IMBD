@@ -12,13 +12,10 @@ public class IMDBGraph implements Graph{
     protected IMDBGraph(String actorsFilename, String actressesFilename) throws IOException {
         mActors = new HashMap<String, ActorNode>();
         mMovies = new HashMap<String, MovieNode>();
-        final File actorFile = new File(actorsFilename);
-        final File actressFile = new File(actressesFilename);
 
         try {
-            //actorScanner = new Scanner(actorFile, "ISO-8859-1");
-            parse(new Scanner(actorFile, "ISO-8859-1"));
-            parse(new Scanner(actressFile, "ISO-8859-1"));
+            parse(new Scanner(new File(actorsFilename), "ISO-8859-1"));
+            parse(new Scanner(new File(actressesFilename), "ISO-8859-1"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -86,7 +83,6 @@ public class IMDBGraph implements Graph{
                 }
             }
         }
-
     }
 
     private void bringToStartOfList(Scanner scanner, String codeWord) {
