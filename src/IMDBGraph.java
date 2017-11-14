@@ -6,33 +6,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class IMDBGraph implements Graph{
-    private HashMap<String, ActorNode> mActors;
-    private HashMap<String, MovieNode> mMovies;
-    private File mActorFile;
-    private File mActressFile;
-    private Scanner mActorScanner;
-    private Scanner mActressScanner;
+    protected Map<String, ActorNode> mActors;
+    protected Map<String, MovieNode> mMovies;
 
-    public IMDBGraph(String actorsFilename, String actressesFilename) throws IOException {
+    protected IMDBGraph(String actorsFilename, String actressesFilename) throws IOException {
         mActors = new HashMap<String, ActorNode>();
         mMovies = new HashMap<String, MovieNode>();
-        mActorFile = new File(actorsFilename);
-        mActressFile = new File(actressesFilename);
+        final File actorFile = new File(actorsFilename);
+        final File actressFile = new File(actressesFilename);
 
         try {
-            mActorScanner = new Scanner(mActorFile, "ISO-8859-1");
-            mActressScanner = new Scanner(mActressFile, "ISO-8859-1");
+            //actorScanner = new Scanner(actorFile, "ISO-8859-1");
+            parse(new Scanner(actorFile, "ISO-8859-1"));
+            parse(new Scanner(actressFile, "ISO-8859-1"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        parse(mActorScanner);
-        parse(mActressScanner);
     }
 
-    private void parse(Scanner scanner) {
+    private void parse(Scanner scanner) throws IOException{
 
         final String regex = new String("(  )|(\t)"); //whatever character separates categories in the file
         ActorNode currentActor = null;
@@ -41,6 +35,11 @@ public class IMDBGraph implements Graph{
 
         while (scanner.hasNext()) {
             String[] dividedLine = scanner.nextLine().split(regex);
+
+            IOException ex = scanner.ioException();
+            if (ex != null) {
+                throw ex;
+            }
 
             //checks to see if new actor is encountered in the file
             if (!(dividedLine[0].equals(""))) {
@@ -98,13 +97,11 @@ public class IMDBGraph implements Graph{
         }
     }
 
-    public GraphNode getNodeByName(String key) {
-        // TODO Auto-generated method stub
+    public Node getNodeByName(String key) {
         return null;
     }
 
     public Collection<? extends Node> getNodes() {
-        // TODO Auto-generated method stub
         return null;
     }
 }
