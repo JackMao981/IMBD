@@ -9,24 +9,7 @@ public class test {
 	static Scanner actorScanner;
 
 	public static void main(String args[]) {
-		// File actorsList = new File("src\\actors_test.list");
-		//
-		// try {
-		// actorScanner = new Scanner(actorsList, "ISO-8859-1");
-		// } catch (FileNotFoundException e) {
-		// e.printStackTrace();
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// }
-		// actorScanner.findInLine("THE ACTORS LIST");
-		// while (actorScanner.hasNext()) {
-		// if (!actorScanner.nextLine().contains("THE ACTORS LIST")) {
-		// System.out.println(actorScanner.nextLine());
-		// } else {
-		// break;
-		// }
-		// }
-		// System.out.println(actorScanner.nextLine());
+
 		try {
 			IMDBGraph graph = new IMDBGraph("C:\\Users\\relat\\IMBD\\src\\actors_test.list",
 					"C:\\Users\\relat\\IMBD\\src\\actresses_test.list");
@@ -35,5 +18,7 @@ public class test {
 		{
 
 		}
+
+
 	}
 }

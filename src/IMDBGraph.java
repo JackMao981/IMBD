@@ -104,10 +104,13 @@ public class IMDBGraph implements Graph{
         return null;
     }
 
+    //for testing
+    public Collection<? extends Node> getMovies() {
+        return mMovies.values();
+    }
 
-
-
-
-
-
+    //for testing
+    public Collection<? extends Node> getActors() {
+        return mActors.values();
+    }
 }
