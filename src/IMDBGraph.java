@@ -17,7 +17,7 @@ public class IMDBGraph implements Graph{
      * @param key they desired node's key.
      * @return the desired node.
      */
-    public GraphNode getNodeByName(String key){
+    public GraphNode getNodeByName(String key) {
       return fMap.get(key);
     }
 
@@ -26,7 +26,7 @@ public class IMDBGraph implements Graph{
      * @return the nodes stored in a collection.//
      */
     public Collection<GraphNode> getNodes() {
-        return fMap.values()
+        return fMap.values();
     }
 
     /**
