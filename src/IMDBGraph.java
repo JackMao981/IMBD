@@ -34,8 +34,10 @@ public class IMDBGraph implements Graph{
 
     private void parse(Scanner scanner) {
 
-        final String regex = new String("  "); //whatever character separates categories in the file
+        final String regex = new String("\t"); //whatever character separates categories in the file
         ActorNode currentActor = null;
+
+        bringToStartOfList(scanner, "----\t\t\t------\n");
 
         while (scanner.hasNext()) {
             String[] dividedLine = scanner.nextLine().split(regex);
@@ -82,6 +84,14 @@ public class IMDBGraph implements Graph{
             }
         }
 
+    }
+
+    private void bringToStartOfList(Scanner scanner, String codeWord) {
+        while (scanner.hasNext()) {
+            if (scanner.nextLine().equals(codeWord)) {
+                break;
+            }
+        }
     }
 
     public GraphNode getNodeByName(String key) {

@@ -27,15 +27,13 @@ public class test {
 		// }
 		// }
 		// System.out.println(actorScanner.nextLine());
-		 try
-		
-		 {
-		 IMDBActorsGraph graph = new IMDBActorsGraph("src\\actors_test.list",
-		 "");
-		 }catch(
-		 IOException e)
-		 {
-		
-		 }
+		try {
+			IMDBGraph graph = new IMDBGraph("C:\\Users\\relat\\IMBD\\src\\actors_test.list",
+					"C:\\Users\\relat\\IMBD\\src\\actresses_test.list");
+		}catch(
+				IOException e)
+		{
+
+		}
 	}
 }
