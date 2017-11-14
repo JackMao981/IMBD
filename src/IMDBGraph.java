@@ -59,7 +59,7 @@ public class IMDBGraph implements Graph{
                 if (!(dividedLine[i].equals(""))) {
 
                     //checks to make sure its not a tv movie/show
-                    if (dividedLine[i].contains("(TV)") || dividedLine[i].startsWith("\"")) {
+                    if (!(dividedLine[i].contains("(TV)") || dividedLine[i].startsWith("\""))) {
 
                         //creates new MovieNode
                         MovieNode newMovie = new MovieNode(dividedLine[0]);
