@@ -34,10 +34,10 @@ public class IMDBGraph implements Graph{
 
     private void parse(Scanner scanner) {
 
-        final String regex = new String("\t"); //whatever character separates categories in the file
+        final String regex = new String("(  )|(\t)"); //whatever character separates categories in the file
         ActorNode currentActor = null;
 
-        bringToStartOfList(scanner, "----\t\t\t------\n");
+        bringToStartOfList(scanner, "----\t\t\t------");
 
         while (scanner.hasNext()) {
             String[] dividedLine = scanner.nextLine().split(regex);
@@ -47,8 +47,10 @@ public class IMDBGraph implements Graph{
 
                 //put in so that if an actor only appears in tv shows/movies, they will be removed from the graph
                 //this is placed here because after a new actor is encountered in the file, you know there are no more  possible movies or shows the previous actor could be in
-                if (currentActor.getNeighbors() == null) {
-                    mActors.remove(currentActor.getName());
+                if (currentActor != null) {
+                    if (currentActor.getNeighbors().size() == 0) {
+                        mActors.remove(currentActor.getName());
+                    }
                 }
 
                 //creates new ActorNode
@@ -79,6 +81,8 @@ public class IMDBGraph implements Graph{
                         currentActor.addNeighbor(movie);
                         break;
 
+                    } else {
+                        break;
                     }
                 }
             }
@@ -102,15 +106,5 @@ public class IMDBGraph implements Graph{
     public Collection<? extends Node> getNodes() {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    //for testing
-    public Collection<? extends Node> getMovies() {
-        return mMovies.values();
-    }
-
-    //for testing
-    public Collection<? extends Node> getActors() {
-        return mActors.values();
     }
 }
