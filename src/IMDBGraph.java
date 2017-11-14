@@ -50,9 +50,9 @@ public class IMDBGraph implements Graph{
                 }
 
                 //creates new ActorNode
-                ActorNode newActor = new ActorNode(dividedLine[0]);
-                mActors.put(dividedLine[0], newActor);
-                currentActor = newActor;
+                ActorNode actor = new ActorNode(dividedLine[0]);
+                mActors.put(dividedLine[0], actor);
+                currentActor = actor;
             }
 
             for (int i = 1; i < dividedLine.length; i++) {
@@ -61,13 +61,20 @@ public class IMDBGraph implements Graph{
                     //checks to make sure its not a tv movie/show
                     if (!(dividedLine[i].contains("(TV)") || dividedLine[i].startsWith("\""))) {
 
-                        //creates new MovieNode
-                        MovieNode newMovie = new MovieNode(dividedLine[0]);
-                        mMovies.put(dividedLine[i], newMovie);
+                        MovieNode movie = null;
+
+                        //sees if the movie does not already have a node
+                        if (! (mMovies.containsKey(dividedLine[i]))) {
+                            //creates new MovieNode
+                            movie = new MovieNode(dividedLine[i]);
+                            mMovies.put(dividedLine[i], movie);
+                        } else {
+                            movie = mMovies.get(dividedLine[i]);
+                        }
 
                         //adds ActorNode to MovieNode's neighbors and vise versa
-                        newMovie.addNeighbor(currentActor);
-                        currentActor.addNeighbor(newMovie);
+                        movie.addNeighbor(currentActor);
+                        currentActor.addNeighbor(movie);
                         break;
 
                     }
