@@ -8,8 +8,8 @@ public class IMDBMoviesGraph extends IMDBGraph{
     }
 
     @Override
-    public Node getNodeByName(String key) {
-        return mMovies.get(key);
+    public Node getNodeByName(String name) {
+        return mMovies.get(name);
     }
 
     @Override

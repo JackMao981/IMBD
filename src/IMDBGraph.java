@@ -25,7 +25,7 @@ public class IMDBGraph implements Graph{
 
     private void parse(Scanner scanner) throws IOException{
 
-        final String regex = new String("(  )|(\t)"); //whatever character separates categories in the file
+        final String regex = new String("(  )|(\t)"); //whatever characters separates categories in the file
         ActorNode currentActor = null;
 
         bringToStartOfList(scanner, "----\t\t\t------");
@@ -56,20 +56,24 @@ public class IMDBGraph implements Graph{
             }
 
             for (int i = 1; i < dividedLine.length; i++) {
-                if (!(dividedLine[i].equals(""))) {
+                String name = dividedLine[i];
+                if (!(name.equals(""))) {
 
                     //checks to make sure its not a tv movie/show
-                    if (!(dividedLine[i].contains("(TV)") || dividedLine[i].startsWith("\""))) {
+                    if (!(name.contains("(TV)") || dividedLine[i].startsWith("\""))) {
+                        if (name.contains("(V)")) {
+                            name = name.substring(0, name.length() - 4);
+                        }
 
                         MovieNode movie = null;
 
                         //sees if the movie does not already have a node
-                        if (! (mMovies.containsKey(dividedLine[i]))) {
+                        if (! (mMovies.containsKey(name))) {
                             //creates new MovieNode
-                            movie = new MovieNode(dividedLine[i]);
-                            mMovies.put(dividedLine[i], movie);
+                            movie = new MovieNode(name);
+                            mMovies.put(name, movie);
                         } else {
-                            movie = mMovies.get(dividedLine[i]);
+                            movie = mMovies.get(name);
                         }
 
                         //adds ActorNode to MovieNode's neighbors and vise versa
@@ -93,7 +97,7 @@ public class IMDBGraph implements Graph{
         }
     }
 
-    public Node getNodeByName(String key) {
+    public Node getNodeByName(String name) {
         return null;
     }
 

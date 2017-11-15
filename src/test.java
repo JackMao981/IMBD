@@ -38,7 +38,7 @@ public class test {
 		*/
 
 		try {
-			IMDBGraph graph = new IMDBGraph("C:\\Users\\relat\\IMDB\\src\\partialActors",
+			IMDBGraph graph = new IMDBGraph("C:\\Users\\relat\\IMDB\\src\\actors_first_10000_lines.list",
 					"C:\\Users\\relat\\IMBD\\src\\actresses_test.list");
 		}catch(
 				IOException e)
