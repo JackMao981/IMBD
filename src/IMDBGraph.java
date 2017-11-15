@@ -61,6 +61,8 @@ public class IMDBGraph implements Graph{
 
                     //checks to make sure its not a tv movie/show
                     if (!(name.contains("(TV)") || dividedLine[i].startsWith("\""))) {
+
+                        //removes (V) from made for video movies
                         if (name.contains("(V)")) {
                             name = name.substring(0, name.length() - 4);
                         }
@@ -68,7 +70,7 @@ public class IMDBGraph implements Graph{
                         MovieNode movie = null;
 
                         //sees if the movie does not already have a node
-                        if (! (mMovies.containsKey(name))) {
+                        if (!(mMovies.containsKey(name))) {
                             //creates new MovieNode
                             movie = new MovieNode(name);
                             mMovies.put(name, movie);
@@ -79,11 +81,9 @@ public class IMDBGraph implements Graph{
                         //adds ActorNode to MovieNode's neighbors and vise versa
                         movie.addNeighbor(currentActor);
                         currentActor.addNeighbor(movie);
-                        break;
-
-                    } else {
-                        break;
                     }
+                    
+                    break;
                 }
             }
         }
