@@ -100,6 +100,8 @@ public class IMDBGraph implements Graph{
                 }
             }
         }
+
+        scanner.close();
     }
 
     /**

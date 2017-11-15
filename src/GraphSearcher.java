@@ -36,8 +36,7 @@ public class GraphSearcher implements GraphSearchEngine {
             for (Iterator<? extends Node> i = edges.iterator(); i.hasNext(); ) {
                 Node neighbor = i.next();
                 if (!(mVisited.contains(neighbor))) {
-                    final List<Node> copiedPath = new ArrayList<Node>((currentPath.size() + 1));
-                    Collections.copy(copiedPath, currentPath);
+                    final List<Node> copiedPath = new ArrayList<Node>(currentPath);
                     copiedPath.add(neighbor);
 
                     // checks to see if this is the desired node here because
@@ -54,7 +53,6 @@ public class GraphSearcher implements GraphSearchEngine {
                 }
             }
         }
-        //!!! might want to check to see what this is supposed to return if there is no connection between actors
         return null;
     }
 
