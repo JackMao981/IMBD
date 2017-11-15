@@ -6,7 +6,7 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
     private Queue<List<Node>> mToVisit;
 
     /**
-     * Creates a GraphSearcher which implements GraphSearchEngine, and is capable of
+     * Creates a GraphSearcher which is capable of
      * finding and returning the shortest path between two nodes.
      */
     public GraphSearchEngineImpl() {

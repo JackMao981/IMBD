@@ -1,5 +1,8 @@
 import java.util.*;
 
+//!!! Yux and Jonathan, you may wonder why this is here. Well, the actual one isn't completly functional, so consider
+// this a save point so that any attempts at fixing can be undone if neccessary
+
 public class GraphSearcher implements GraphSearchEngine {
 
     private List<Node> mVisited;
@@ -28,12 +31,12 @@ public class GraphSearcher implements GraphSearchEngine {
 
         while (mToVisit.peek() != null) {
             final List<Node> currentPath = mToVisit.remove();
-            final Node currentNode = currentPath.get(currentPath.size());
+            final Node currentNode = currentPath.get(currentPath.size() - 1);
             final Collection<? extends Node> edges = currentNode.getNeighbors();
             for (Iterator<? extends Node> i = edges.iterator(); i.hasNext(); ) {
                 Node neighbor = i.next();
                 if (!(mVisited.contains(neighbor))) {
-                    final List<Node> copiedPath = new ArrayList<Node>((currentPath.size() + 1 ));
+                    final List<Node> copiedPath = new ArrayList<Node>((currentPath.size() + 1));
                     Collections.copy(copiedPath, currentPath);
                     copiedPath.add(neighbor);
 
@@ -54,5 +57,6 @@ public class GraphSearcher implements GraphSearchEngine {
         //!!! might want to check to see what this is supposed to return if there is no connection between actors
         return null;
     }
+
 
 }

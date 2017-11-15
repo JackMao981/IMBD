@@ -9,6 +9,13 @@ public class IMDBGraph implements Graph{
     protected Map<String, ActorNode> mActors;
     protected Map<String, MovieNode> mMovies;
 
+    /**
+     * Constructs a graph of interconnected ActorNodes and MovieNodes based on
+     * two files listing actors/actresses and the movies they appeared in.
+     * @param actorsFilename the path of the file for actors
+     * @param actressesFilename the path of the file for actresses
+     * @throws IOException
+     */
     protected IMDBGraph(String actorsFilename, String actressesFilename) throws IOException {
         mActors = new HashMap<String, ActorNode>();
         mMovies = new HashMap<String, MovieNode>();
@@ -23,12 +30,18 @@ public class IMDBGraph implements Graph{
         }
     }
 
+    /**
+     * Parses the data given by a scanner into ActorNodes and MovieNodes,
+     * connects said Nodes, and stores them according to type (ActorNode or MovieNode)
+     * @param scanner the scanner
+     * @throws IOException
+     */
     private void parse(Scanner scanner) throws IOException{
-
-        final String regex = new String("(  )|(\t)"); //whatever characters separates categories in the file
-        ActorNode currentActor = null;
+        final String regex = new String("(  )|(\t)"); //whatever characters separate categories in the file
 
         bringToStartOfList(scanner, "----\t\t\t------");
+
+        ActorNode currentActor = null;
 
         while (scanner.hasNext()) {
             String[] dividedLine = scanner.nextLine().split(regex);
@@ -89,18 +102,33 @@ public class IMDBGraph implements Graph{
         }
     }
 
-    private void bringToStartOfList(Scanner scanner, String codeWord) {
+    /**
+     * Brings scanner to the first line that is a certain String
+     * so that nextLine() will return the line after that line
+     * @param scanner the scanner
+     * @param keyString the String that is the line the scanner is to be brought to
+     */
+    private void bringToStartOfList(Scanner scanner, String keyString) {
         while (scanner.hasNext()) {
-            if (scanner.nextLine().equals(codeWord)) {
+            if (scanner.nextLine().equals(keyString)) {
                 break;
             }
         }
     }
 
+    /**
+     * Should be overridden by subclasses to return an ActorNode or MovieNode of the given name
+     * @param name the name of the requested Node
+     * @return null because unknown if a ActorNode or MovieNode is desired
+     */
     public Node getNodeByName(String name) {
         return null;
     }
 
+    /**
+     * Should be overridden by subclasses to return the Collection of all ActorNodes or all MovieNodes in the graph
+     * @return null because unknown if a collection of ActorNodes or MovieNodes is desired
+     */
     public Collection<? extends Node> getNodes() {
         return null;
     }
