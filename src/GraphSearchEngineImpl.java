@@ -3,55 +3,89 @@ import java.util.*;
 public class GraphSearchEngineImpl implements GraphSearchEngine {
 
     private List<Node> mVisited;
-    private Queue<List<Node>> mToVisit;
+    private Queue<Node> mToVisit;
+    private List<Node> mShortestPath;
+    private List<NodeDistance> mNodeDistances;
+    private int radius;
+
+    private class NodeDistance {
+        private int mDistance;
+        private Node mNode;
+
+        private NodeDistance(int distance, Node node) {
+            mDistance = distance;
+            mNode = node;
+        }
+
+        private int getDistance() {
+            return this.mDistance;
+        }
+
+        private Node getNodeWithDistance() {
+            return this.mNode;
+        }
+    }
+
 
     /**
-     * Creates a GraphSearcher which is capable of
+     * Creates a GraphSearcher which implements GraphSearchEngine, and is capable of
      * finding and returning the shortest path between two nodes.
      */
     public GraphSearchEngineImpl() {
         mVisited = new ArrayList<Node>();
-        mToVisit = new LinkedList<List<Node>>();
+        mToVisit = new LinkedList<Node>();
+        mNodeDistances = new ArrayList<NodeDistance>();
+        mShortestPath = new ArrayList<Node>();
+        radius = 0;
+
     }
 
     /**
      * Finds and returns the shortest path between two nodes
+     *
      * @param s the start node.
      * @param t the target node.
      * @return the path from s to t, including s and t
      */
     public List<Node> findShortestPath(Node s, Node t) {
-        final ArrayList<Node> initialPath = new ArrayList<Node>();
-        initialPath.add(s);
-        mToVisit.add(initialPath);
-        mVisited.add(s);
+        mToVisit.add(s);
+        /**
+         * Searches through the graph until node t is found, building a list of visited nodes
+         * and their distances from s.
+         */
+        while (mToVisit.size() > 0) {
+            Node visitedNode = mToVisit.remove();
+            mVisited.add(visitedNode);
+            mNodeDistances.add(new NodeDistance(radius, visitedNode));
+            if (visitedNode.equals(t))
+                break;
 
-        while (mToVisit.peek() != null) {
-            final List<Node> currentPath = mToVisit.remove();
-            final Node currentNode = currentPath.get(currentPath.size() - 1);
-            final Collection<? extends Node> edges = currentNode.getNeighbors();
-            for (Iterator<? extends Node> i = edges.iterator(); i.hasNext(); ) {
+            final Collection<? extends Node> neighbors = mVisitedNode.getNeighbors();
+            for (Iterator<? extends Node> i = neighbors.iterator(); i.hasNext(); ) {
                 Node neighbor = i.next();
-                if (!(mVisited.contains(neighbor))) {
-                    final List<Node> copiedPath = new ArrayList<Node>(currentPath);
-                    copiedPath.add(neighbor);
+                if (!mVisited.contains(neighbor) && !mToVisit.contains(neighbor)){
+                    mToVisit.add(s);
+                }
 
-                    // checks to see if this is the desired node here because
-                    // this is before it gets added to the queue-- so you don't have to go through
-                    // the whole queue to reach it-- and this is after the path has been copied, so it can easily
-                    // return the correct path.
-                    if (neighbor == t) {
-                        return copiedPath;
-                    }
+            }
+            radius++;
+        }
+        mShortestPath.add(t);
+        /**
+         * Backtracks from t through the list of visited nodes and their distances, until
+         * a shortest path to node s is generated. After the path to s is generated, s is added
+         * to the shortest path, completing the shortest path.
+         */
 
-                    mToVisit.add(copiedPath);
-                    mVisited.add(neighbor);
-
+        for (int i = radius - 1; i > 0; radius--) {
+            for (int j = 0; j < mNodeDistances.size(); j++) {
+                if (mNodeDistances.get(j).getDistance() == i) {
+                    mShortestPath.add(mNodeDistances.get(j).getNodeWithDistance());
+                    break;
                 }
             }
         }
-        return null;
+        mShortestPath.add(s);
+        return mShortestPath;
     }
-
-
 }
