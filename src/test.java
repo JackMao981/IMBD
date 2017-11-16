@@ -28,7 +28,7 @@ public class test {
 			List<Node> test = searcher.findShortestPath(aGraph.getNodeByName("Actor1"), aGraph.getNodeByName("Actor2"));
 			int i = 9;
 			GraphSearcher mySearcher = new GraphSearcher();
-			List<Node> test2 = searcher.findShortestPath(aGraph.getNodeByName("Actor1"), aGraph.getNodeByName("Actor2"));
+			List<Node> test2 = searcher.findShortestPath(aGraph.getNodeByName("Actor1"), aGraph.getNodeByName("Actor3"));
 			int j = 9;
 
 		}catch(

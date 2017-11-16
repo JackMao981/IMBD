@@ -64,14 +64,14 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
             for (Iterator<? extends Node> j = possibleNodes.iterator(); j.hasNext(); ) {
                 Node node = j.next();
 
-                if (mNodeDistances.get(node) == lengthOfShortestPath && node.getNeighbors().contains(currentNode)) {
+                if (mNodeDistances.get(node) == i && node.getNeighbors().contains(currentNode)) {
                     shortestPath.add(node);
                     currentNode = node;
                 }
             }
         }
         shortestPath.add(s);
-
+        Collections.reverse(shortestPath);
         return shortestPath;
     }
 }
