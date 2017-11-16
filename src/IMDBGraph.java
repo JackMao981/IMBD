@@ -95,7 +95,6 @@ public class IMDBGraph implements Graph{
                         movie.addNeighbor(currentActor);
                         currentActor.addNeighbor(movie);
                     }
-
                     break;
                 }
             }

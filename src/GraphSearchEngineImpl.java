@@ -11,6 +11,7 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
      */
     public GraphSearchEngineImpl() {
         mToVisit = new LinkedList<Node>();
+        //keeps track of all nodes visited and their distance from Node s
         mNodeDistances = new HashMap<Node, Integer>();
     }
 
@@ -25,7 +26,7 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
 
         mToVisit.add(s);
 
-        while (mToVisit.size() > 0) {
+        while (mToVisit.peek() != null) {
             Node visitedNode = mToVisit.remove();
             if (visitedNode.equals(t)) {
                 return backtrack(s, t, radius);
@@ -35,6 +36,7 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
             final Collection<? extends Node> neighbors = visitedNode.getNeighbors();
             for (Iterator<? extends Node> i = neighbors.iterator(); i.hasNext(); ) {
                 Node neighbor = i.next();
+                //if the Node has already been visisted or if it is already in the Queue
                 if (!mNodeDistances.containsKey(neighbor) && !mToVisit.contains(neighbor)){
                     mToVisit.add(neighbor);
                 }
@@ -46,9 +48,9 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
     }
 
     /**
-     * Backtracks from t to s to find the List that constitutes the shortest path
-     * @param s the start node
-     * @param t the end node
+     * Backtracks from t to s to return the List that constitutes the shortest path between the two nodes
+     * @param s the initial start node
+     * @param t the initial end node
      * @param lengthOfShortestPath the distance from s to t
      * @return
      */

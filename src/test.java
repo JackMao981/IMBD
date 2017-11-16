@@ -1,10 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class test {
 	static IMDBActorsGraph aGraph;
@@ -14,9 +11,9 @@ public class test {
 
 		try {
 			IMDBActorsGraph aGraph = new IMDBActorsGraph("C:\\Users\\relat\\IMDB\\src\\actors_test.list",
-					"C:\\Users\\relat\\IMBD\\src\\actresses_test.list");
+					"C:\\Users\\relat\\IMDB\\src\\actresses_test.list");
 			IMDBMoviesGraph mGraph = new IMDBMoviesGraph("C:\\Users\\relat\\IMDB\\src\\actors_test.list",
-					"C:\\Users\\relat\\IMBD\\src\\actresses_test.list");
+					"C:\\Users\\relat\\IMDB\\src\\actresses_test.list");
 
 			System.out.println(aGraph.getNodeByName("Actor1").getName());
 			System.out.println(aGraph.getNodeByName("Actress2").getName());
@@ -27,6 +24,12 @@ public class test {
 				System.out.println(neighbor.getName());
 			}
 
+			GraphSearchEngineImpl searcher = new GraphSearchEngineImpl();
+			List<Node> test = searcher.findShortestPath(aGraph.getNodeByName("Actor1"), aGraph.getNodeByName("Actor2"));
+			int i = 9;
+			GraphSearcher mySearcher = new GraphSearcher();
+			List<Node> test2 = searcher.findShortestPath(aGraph.getNodeByName("Actor1"), aGraph.getNodeByName("Actor2"));
+			int j = 9;
 
 		}catch(
 				IOException e)
