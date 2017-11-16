@@ -8,6 +8,7 @@ import java.util.Map;
 public class IMDBGraph implements Graph{
     protected Map<String, ActorNode> mActors;
     protected Map<String, MovieNode> mMovies;
+    protected int NUM_SUBTRACT_FOR_V = 4;
 
     /**
      * Constructs a graph of interconnected ActorNodes and MovieNodes based on
@@ -68,36 +69,8 @@ public class IMDBGraph implements Graph{
                 currentActor = actor;
             }
 
-            for (int i = 1; i < dividedLine.length; i++) {
-                String name = dividedLine[i];
-                if (!(name.equals(""))) {
+            parseMovies(currentActor, dividedLine);
 
-                    //checks to make sure its not a tv movie/show
-                    if (!(name.contains("(TV)") || dividedLine[i].startsWith("\""))) {
-
-                        //removes (V) from made for video movies
-                        if (name.contains("(V)")) {
-                            name = name.substring(0, name.length() - 4);
-                        }
-
-                        MovieNode movie = null;
-
-                        //sees if the movie does not already have a node
-                        if (!(mMovies.containsKey(name))) {
-                            //creates new MovieNode
-                            movie = new MovieNode(name);
-                            mMovies.put(name, movie);
-                        } else {
-                            movie = mMovies.get(name);
-                        }
-
-                        //adds ActorNode to MovieNode's neighbors and vise versa
-                        movie.addNeighbor(currentActor);
-                        currentActor.addNeighbor(movie);
-                    }
-                    break;
-                }
-            }
         }
 
         scanner.close();
@@ -112,6 +85,44 @@ public class IMDBGraph implements Graph{
     private void bringToStartOfList(Scanner scanner, String keyString) {
         while (scanner.hasNext()) {
             if (scanner.nextLine().equals(keyString)) {
+                break;
+            }
+        }
+    }
+
+    /**
+     * Parses the movie component of each line, MovieNode is stored neighbors for both ActorNode and MovieNode is added to
+     * @param currentActor the corresponding ActorNode for the to-be-parsed MovieNode
+     * @param dividedLine the current line split by the delimiter
+     */
+    private void parseMovies (ActorNode currentActor, String[] dividedLine) {
+        for (int i = 1; i < dividedLine.length; i++) {
+            String name = dividedLine[i];
+            if (!(name.equals(""))) {
+
+                //checks to make sure its not a tv movie/show
+                if (!(name.contains("(TV)") || dividedLine[i].startsWith("\""))) {
+
+                    //removes (V) from made for video movies
+                    if (name.contains("(V)")) {
+                        name = name.substring(0, name.length() - NUM_SUBTRACT_FOR_V);
+                    }
+
+                    MovieNode movie = null;
+
+                    //sees if the movie does not already have a node
+                    if (!(mMovies.containsKey(name))) {
+                        //creates new MovieNode
+                        movie = new MovieNode(name);
+                        mMovies.put(name, movie);
+                    } else {
+                        movie = mMovies.get(name);
+                    }
+
+                    //adds ActorNode to MovieNode's neighbors and vise versa
+                    movie.addNeighbor(currentActor);
+                    currentActor.addNeighbor(movie);
+                }
                 break;
             }
         }
