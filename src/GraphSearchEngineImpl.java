@@ -42,7 +42,6 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
                 if (!mVisited.contains(neighbor) && !mToVisit.contains(neighbor)){
                     mToVisit.add(neighbor);
                 }
-
             }
             radius++;
         }
