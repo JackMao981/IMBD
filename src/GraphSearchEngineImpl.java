@@ -2,7 +2,6 @@ import java.util.*;
 
 public class GraphSearchEngineImpl implements GraphSearchEngine {
 
-    private List<Node> mVisited;
     private Queue<Node> mToVisit;
     private Map<Node, Integer> mNodeDistances;
 
@@ -11,7 +10,6 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
      * finding and returning the shortest path between two nodes.
      */
     public GraphSearchEngineImpl() {
-        mVisited = new ArrayList<Node>();
         mToVisit = new LinkedList<Node>();
         mNodeDistances = new HashMap<Node, Integer>();
     }
@@ -31,7 +29,6 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
 
         while (mToVisit.size() > 0) {
             Node visitedNode = mToVisit.remove();
-            mVisited.add(visitedNode);
             mNodeDistances.put(visitedNode, radius);
             if (visitedNode.equals(t))
                 break;
@@ -39,7 +36,7 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
             final Collection<? extends Node> neighbors = visitedNode.getNeighbors();
             for (Iterator<? extends Node> i = neighbors.iterator(); i.hasNext(); ) {
                 Node neighbor = i.next();
-                if (!mVisited.contains(neighbor) && !mToVisit.contains(neighbor)){
+                if (!mNodeDistances.containsKey(neighbor) && !mToVisit.contains(neighbor)){
                     mToVisit.add(neighbor);
                 }
             }
