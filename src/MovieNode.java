@@ -13,7 +13,7 @@ public class MovieNode extends GraphNode {
 	}
 
 	/**
-     * Adds an ActorNode to the Collection of ActorNodes representing the actors who appeared in the movie
+     * Adds an ActorNode to the Collection of ActorNodes representing the movies the actor appeared in
      * @param actor the ActorNode
      */
     public void addNeighbor(ActorNode actor) {

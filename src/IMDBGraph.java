@@ -8,7 +8,7 @@ import java.util.Map;
 public class IMDBGraph implements Graph{
     protected Map<String, ActorNode> mActors;
     protected Map<String, MovieNode> mMovies;
-    protected int NUM_SUBTRACT_FOR_V = 4;
+    private int NUM_SUBTRACT_FOR_V = 4; //number of characters in " (V)"
 
     /**
      * Constructs a graph of interconnected ActorNodes and MovieNodes based on
@@ -45,31 +45,34 @@ public class IMDBGraph implements Graph{
         ActorNode currentActor = null;
 
         while (scanner.hasNext()) {
-            String[] dividedLine = scanner.nextLine().split(regex);
+            String next = scanner.nextLine();
+            if (next.contains("\t")) {
+                String[] dividedLine = next.split(regex);
 
-            IOException ex = scanner.ioException();
-            if (ex != null) {
-                throw ex;
-            }
-
-            //checks to see if new actor is encountered in the file
-            if (!(dividedLine[0].equals(""))) {
-
-                //put in so that if an actor only appears in tv shows/movies, they will be removed from the graph
-                //this is placed here because after a new actor is encountered in the file, you know there are no more  possible movies or shows the previous actor could be in
-                if (currentActor != null) {
-                    if (currentActor.getNeighbors().size() == 0) {
-                        mActors.remove(currentActor.getName());
-                    }
+                IOException ex = scanner.ioException();
+                if (ex != null) {
+                    throw ex;
                 }
 
-                //creates new ActorNode
-                ActorNode actor = new ActorNode(dividedLine[0]);
-                mActors.put(dividedLine[0], actor);
-                currentActor = actor;
-            }
+                //checks to see if new actor is encountered in the file
+                if (!(dividedLine[0].equals(""))) {
 
-            parseMovies(currentActor, dividedLine);
+                    //put in so that if an actor only appears in tv shows/movies, they will be removed from the graph
+                    //this is placed here because after a new actor is encountered in the file, you know there are no more  possible movies or shows the previous actor could be in
+                    if (currentActor != null) {
+                        if (currentActor.getNeighbors().size() == 0) {
+                            mActors.remove(currentActor.getName());
+                        }
+                    }
+
+                    //creates new ActorNode
+                    ActorNode actor = new ActorNode(dividedLine[0]);
+                    mActors.put(dividedLine[0], actor);
+                    currentActor = actor;
+                }
+
+                parseMovie(currentActor, dividedLine);
+            }
 
         }
 
@@ -95,7 +98,8 @@ public class IMDBGraph implements Graph{
      * @param currentActor the corresponding ActorNode for the to-be-parsed MovieNode
      * @param dividedLine the current line split by the delimiter
      */
-    private void parseMovies (ActorNode currentActor, String[] dividedLine) {
+    private void parseMovie (ActorNode currentActor, String[] dividedLine) {
+        //starts at index of 1 to cut of the String which could have included the actor's name
         for (int i = 1; i < dividedLine.length; i++) {
             String name = dividedLine[i];
             if (!(name.equals(""))) {

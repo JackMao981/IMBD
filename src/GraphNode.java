@@ -3,8 +3,8 @@ import java.util.Collection;
 
 public class GraphNode implements Node {
 
-	protected String mName;
-	protected Collection<GraphNode> mNeighbors;
+	private String mName;
+	private Collection<Node> mNeighbors;
 
 	/**
 	 * Constructs a Node for a graph where the edges are represented by a Collection of neighboring Nodes
@@ -12,7 +12,7 @@ public class GraphNode implements Node {
 	 */
 	protected GraphNode(String name) {
 		mName = name;
-		mNeighbors = new ArrayList<GraphNode>();
+		mNeighbors = new ArrayList<Node>();
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class GraphNode implements Node {
 	 * Adds a Node to the Collection of neighboring Nodes
 	 * @param node the Node to be added to the Collection of neighbors
 	 */
-    protected void addNeighbor(GraphNode node) {
+    protected void addNeighbor(Node node) {
         mNeighbors.add(node);
     }
 }

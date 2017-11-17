@@ -11,14 +11,15 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
      */
     public GraphSearchEngineImpl() {
         mToVisit = new LinkedList<Node>();
+
         //keeps track of all nodes visited and their distance from Node s
         mNodeDistances = new HashMap<Node, Integer>();
     }
 
     /**
      * Finds and returns the shortest path between two nodes
-     * @param s the start node.
-     * @param t the target node.
+     * @param s the start node
+     * @param t the target node
      * @return the path from s to t, including s and t
      */
     public List<Node> findShortestPath(Node s, Node t) {
@@ -52,7 +53,7 @@ public class GraphSearchEngineImpl implements GraphSearchEngine {
      * @param s the initial start node
      * @param t the initial end node
      * @param lengthOfShortestPath the distance from s to t
-     * @return
+     * @return the shortest path from s to t
      */
     private List<Node> backtrack(Node s, Node t, int lengthOfShortestPath) {
         List<Node> shortestPath = new ArrayList<Node>();
