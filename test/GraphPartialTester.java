@@ -15,11 +15,33 @@ public class GraphPartialTester {
 	/**
 	 * Verifies that there is no shortest path between a specific and actor and actress.
 	 */
-	public void findShortestPath () {
+	public void findShortestPathNoPath () {
 		final Node actor1 = actorsGraph.getNodeByName("Actor1");
 		final Node actress2 = actorsGraph.getNodeByName("Actress2");
 		final List<Node> shortestPath = searchEngine.findShortestPath(actor1, actress2);
 		assertNull(shortestPath);  // there is no path between these people
+	}
+
+	@Test(timeout=5000)
+	/**
+	 * Verifies that there is a shortest path between Actor1 and Actress1.
+	 */
+	public void findShortestPathLenghtOneMovieV1 () {
+		final Node actor1 = actorsGraph.getNodeByName("Actor1");
+		final Node actress1 = actorsGraph.getNodeByName("Actress1");
+		final List<Node> shortestPath = searchEngine.findShortestPath(actor1, actress1);
+		assertEquals(shortestPath.size(), 3);  // there is no path between these people
+	}
+
+	@Test(timeout=50000)
+	/**
+	 * Verifies that there is a shortest path between Actor4 and Actor6.
+	 */
+	public void findShortestPathLenghtOneMovieV2 () {
+		final Node actor4 = actorsGraph.getNodeByName("Actor4");
+		final Node actor6 = actorsGraph.getNodeByName("Actor6");
+		final List<Node> shortestPath = searchEngine.findShortestPath(actor4, actor6);
+		assertEquals(shortestPath.size(), 5);  // there is no path between these people
 	}
 
 	@Before

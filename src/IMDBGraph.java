@@ -8,7 +8,11 @@ import java.util.Map;
 public class IMDBGraph implements Graph{
     protected Map<String, ActorNode> mActors;
     protected Map<String, MovieNode> mMovies;
-    private int NUM_SUBTRACT_FOR_V = 4; //number of characters in " (V)"
+    private static final String DIRECT_TO_VIDEO = " (V)";
+    private static final String TV_CASE_1 = " (TV)";
+    private static final String TV_CASE_2 = "\"";
+    private static final String TOP_OF_LIST = "----\t\t\t------";
+    private static final String DELIMITER = "(  )|(\t)"; //whatever characters separate categories in the file
 
     /**
      * Constructs a graph of interconnected ActorNodes and MovieNodes based on
@@ -38,17 +42,18 @@ public class IMDBGraph implements Graph{
      * @throws IOException
      */
     private void parse(Scanner scanner) throws IOException{
-        final String regex = new String("(  )|(\t)"); //whatever characters separate categories in the file
-
-        bringToStartOfList(scanner, "----\t\t\t------");
+        bringToStartOfList(scanner, TOP_OF_LIST);
 
         ActorNode currentActor = null;
 
         while (scanner.hasNext()) {
             String next = scanner.nextLine();
-            if (next.contains("\t")) {
-                String[] dividedLine = next.split(regex);
 
+            //only parse lines with tabs because the extra lines after the actors list will not have tabs
+            if (next.contains("\t")) {
+                String[] dividedLine = next.split(DELIMITER);
+
+                //check for an IOException
                 IOException ex = scanner.ioException();
                 if (ex != null) {
                     throw ex;
@@ -99,36 +104,38 @@ public class IMDBGraph implements Graph{
      * @param dividedLine the current line split by the delimiter
      */
     private void parseMovie (ActorNode currentActor, String[] dividedLine) {
-        //starts at index of 1 to cut of the String which could have included the actor's name
-        for (int i = 1; i < dividedLine.length; i++) {
-            String name = dividedLine[i];
-            if (!(name.equals(""))) {
 
-                //checks to make sure its not a tv movie/show
-                if (!(name.contains("(TV)") || dividedLine[i].startsWith("\""))) {
+        int index = 1;
+        //skip over any leading blank elements
+        while (dividedLine[index].equals("")){
+            index++;
+        }
 
-                    //removes (V) from made for video movies
-                    if (name.contains("(V)")) {
-                        name = name.substring(0, name.length() - NUM_SUBTRACT_FOR_V);
-                    }
+        String name = dividedLine[index];
 
-                    MovieNode movie = null;
+        //checks if movie is a tv show or tv movie
+        if (!(name.contains(TV_CASE_1) || name.startsWith(TV_CASE_2))) {
 
-                    //sees if the movie does not already have a node
-                    if (!(mMovies.containsKey(name))) {
-                        //creates new MovieNode
-                        movie = new MovieNode(name);
-                        mMovies.put(name, movie);
-                    } else {
-                        movie = mMovies.get(name);
-                    }
-
-                    //adds ActorNode to MovieNode's neighbors and vise versa
-                    movie.addNeighbor(currentActor);
-                    currentActor.addNeighbor(movie);
-                }
-                break;
+            //removes (V) from made for video movies
+            if (name.contains(DIRECT_TO_VIDEO)) {
+                name = name.substring(0, name.length() - DIRECT_TO_VIDEO.length());
             }
+
+            MovieNode movie = null;
+
+            //sees if the movie does not already have a node
+            if (!(mMovies.containsKey(name))) {
+
+                //creates new MovieNode
+                movie = new MovieNode(name);
+                mMovies.put(name, movie);
+            } else {
+                movie = mMovies.get(name);
+            }
+
+            //adds ActorNode to MovieNode's neighbors and vise versa
+            movie.addNeighbor(currentActor);
+            currentActor.addNeighbor(movie);
         }
     }
 

@@ -10,8 +10,8 @@ public class test {
 	public static void main(String args[]) {
 
 		try {
-			IMDBActorsGraph aGraph = new IMDBActorsGraph("C:\\Users\\relat\\IMDB\\src\\actors_test.list",
-					"C:\\Users\\relat\\IMDB\\src\\actresses_test.list");
+			IMDBActorsGraph aGraph = new IMDBActorsGraph("C:\\Users\\relat\\IMDB\\src\\actors_first_10000_lines.list",
+					"C:\\Users\\relat\\IMDB\\src\\actors_first_10000_lines.list");
 			IMDBMoviesGraph mGraph = new IMDBMoviesGraph("C:\\Users\\relat\\IMDB\\src\\actors_test.list",
 					"C:\\Users\\relat\\IMDB\\src\\actresses_test.list");
 
@@ -36,6 +36,7 @@ public class test {
 		{
 
 		}
+
 
 	}
 }

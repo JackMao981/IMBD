@@ -10,7 +10,6 @@ public class ActorNode extends GraphNode {
 	 */
 	public ActorNode(String name) {
 		super(name);
-
 	}
 
 	/**
